@@ -1,0 +1,90 @@
+﻿<Window x:Class="Sonya3laba.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sonya3laba"
+        mc:Ignorable="d"
+        Title="Построитель предложений" Height="718" Width="1308"
+        Background="#FF67AFC7"
+        Foreground="#FF2006DE"
+        FontFamily="Times New Roman"
+        FontSize="20">
+    <DockPanel LastChildFill="True">
+        <!-- Прилагательные слева -->
+        <GroupBox Header="Прилагательное" DockPanel.Dock="Left" Width="200">
+            <StackPanel x:Name="AdjectivesPanel">
+                <RadioButton Content="Красивый" GroupName="Adjectives" IsChecked="True"/>
+                <RadioButton Content="Большой" GroupName="Adjectives"/>
+                <RadioButton Content="Странный" GroupName="Adjectives"/>
+                <RadioButton Content="Далекий" GroupName="Adjectives"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Существительные сверху с возможностью редактирования -->
+        <GroupBox Header="Существительное (редактируемый список)" DockPanel.Dock="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Текущее значение:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBox x:Name="NounTextBox" Width="200" VerticalAlignment="Center" PreviewKeyDown="NounTextBox_PreviewKeyDown"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
+                    <Button x:Name="AddButton" Width="120" Click="AddButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="+" FontSize="22" Margin="0,0,5,0"/>
+                            <TextBlock Text="Добавить"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="UpdateButton" Width="120" Margin="10,0,0,0" Click="UpdateButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="✎" Margin="0,0,5,0"/>
+                            <TextBlock Text="Изменить"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="DeleteButton" Width="120" Margin="10,0,0,0" Click="DeleteButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="remove.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                            <TextBlock Text="Удалить" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <ComboBox x:Name="NounsComboBox" Grid.Row="2" Margin="5" FontSize="16"
+                          SelectionChanged="NounsComboBox_SelectionChanged"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Глаголы справа -->
+        <!-- Привязка-->
+        <GroupBox Header="Глагол" DockPanel.Dock="Right" Width="200">
+            <ListBox x:Name="VerbsListBox" Margin="5" SelectionMode="Single"
+          SelectedItem="{Binding SelectedVerb, Mode=TwoWay}"
+          ItemsSource="{Binding Verbs}"/>
+
+        </GroupBox>
+        <!-- Результат -->
+        <StackPanel DockPanel.Dock="Bottom" Margin="10">
+            <Button x:Name="BuildButton" Content="Построить предложение" 
+                    Click="BuildButton_Click" FontSize="16" Padding="10,5"/>
+
+            <Expander x:Name="ResultExpander" Header="Результат" Margin="0,20"
+                      IsExpanded="True" FontSize="16">
+                <StackPanel>
+                    <TextBlock x:Name="ResultText" FontSize="25" 
+                               TextAlignment="Center" FontWeight="Bold"
+                               Margin="0,10" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="DetailsText" FontSize="20" 
+                               TextAlignment="Center" Margin="0,5"
+                               FontStyle="Italic" Foreground="#FFEC0D0D"/>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+    </DockPanel>
+</Window>
